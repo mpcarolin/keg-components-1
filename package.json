@@ -21,7 +21,7 @@
     "storybook": "RE_PLATFORM=web start-storybook",
     "sb": "RE_PLATFORM=web start-storybook",
     "sb:build": "yarn clean:docs; RE_PLATFORM=web build-storybook -c .storybook -o docs",
-    "sb:deploy": "storybook-to-ghpages -e docs",
+    "sb:deploy": "storybook-to-ghpages -e docs --dry-run",
     "sb:web": "RE_PLATFORM=web start-storybook",
     "sb:native": "RE_PLATFORM=native start-storybook",
     "sb:server": "npx http-server docs"
