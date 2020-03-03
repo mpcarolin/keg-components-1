@@ -14,7 +14,6 @@ const states = {
         minHeight: 35,
         outline: 'none',
         textAlign: 'center',
-        margin: 'auto',
       },
       $web: {
         cursor: 'pointer',
