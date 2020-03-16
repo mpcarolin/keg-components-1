@@ -1,75 +1,73 @@
 import React from 'react'
-import { useTheme, useThemeActive, useThemeHover } from 'KegReTheme'
-import { useStyles } from '../../hooks'
-import { get, isFunc } from 'jsutils'
+import { useThemeHover, useThemeActive } from 're-theme'
+import { useThemePath } from '../../hooks'
+import { get } from 'jsutils'
 import PropTypes from 'prop-types'
 import { Text } from '../typography/text'
-import {
-  buildCompStyles,
-  getActiveOpacity,
-  getPressHandler,
-  isValidComponent,
-  renderFromType
-} from '../../utils'
+import { getActiveOpacity, getPressHandler, renderFromType } from '../../utils'
 
-const getChildren = (Children, theme, activeStyle, styles={}) => {
-  return renderFromType(Children, { style: theme.join(activeStyle.content, styles.content) }, Text)
+/**
+ * Finds the child type and formats it in the proper type to be rendered
+ * @param {Object|Array|string} Children - React components to render
+ * @param {Object} theme - Re-Theme Object
+ * @param {Object} activeStyle - Current styles based on the state of the element
+ * @param {Object} [styles={}] - Custom styles passed into the component as a prop
+ *
+ * @returns {React Component|Object|Array}
+ */
+const getChildren = (Children, styles={}) => {
+  return renderFromType(Children, { style: styles.content }, Text)
 }
 
+const checkDisabled = (mainStyles, btnStyles, disabled) => {
+  return disabled
+    ? { ...mainStyles, ...get(btnStyles, 'disabled.main') }
+    : mainStyles
+}
+
+/**
+ * ButtonWrapper
+ * Wraps the Passed in Element which should be a Button for the platform type
+ * @param {Object} props - see PropTypes below
+ *
+ */
 export const ButtonWrapper = props => {
-  const theme = useTheme()
 
   const {
     Element,
     children,
     content,
-    disabled,
-    danger,
     isWeb,
     onClick,
     onPress,
-    outline,
-    contained,
-    primary,
+    themePath,
     ref,
-    style,
     styles,
-    secondary,
-    text,
-    type,
-    warn,
     ...elProps
   } = props
 
+  const [ btnStyles ] = useThemePath(themePath || 'button.contained.default', styles)
 
-  const [ btnStyles, setBtnStyles ] = useStyles(
-    theme,
-    `components.button`,
-    [ { type, outline, text, contained }, 'contained' ],
-    [ { primary, secondary, warn, danger }, 'default' ]
+  const [ hoverRef, hoverStyles ] = useThemeHover(
+    get(btnStyles, 'default', {}),
+    get(btnStyles, 'hover'),
+    { ref, noMerge: true }
   )
 
-  const [ hoverRef, activeStyle ] = useThemeHover(
-    btnStyles.default,
-    btnStyles.hover,
-    { ref, noMerge: true }
+  const [ themeRef, themeStyles ] = useThemeActive(
+    hoverStyles,
+    get(btnStyles, 'active'),
+    { ref: hoverRef, noMerge: true }
   )
 
   return (
     <Element
-      elProps={ elProps }
-      ref={ hoverRef }
-      disabled={ disabled }
-      style={ theme.join(
-        activeStyle.main,
-        styles && get(styles, [ 'button', 'main' ]),
-        disabled && get(btnStyles, [ 'disabled', 'main' ]),
-        disabled && styles && get(styles, [ 'button', 'disabled' ]),
-        style
-      )}
-      children={ getChildren(children || content, theme, activeStyle, styles) }
+      { ...elProps }
+      ref={ themeRef }
+      style={ checkDisabled(themeStyles.main, btnStyles, props.disabled) }
+      children={ getChildren(children || content, themeStyles) }
       { ...getPressHandler(isWeb, onClick, onPress) }
-      { ...getActiveOpacity(isWeb, props, activeStyle) }
+      { ...getActiveOpacity(isWeb, props, btnStyles) }
     />
   )
 
@@ -88,11 +86,18 @@ ButtonWrapper.propTypes = {
     PropTypes.array,
     PropTypes.func,
   ]),
+  Element: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.array,
+  ]),
   disabled: PropTypes.bool,
+  isWeb: PropTypes.bool,
   onClick: PropTypes.func,
   onPress: PropTypes.func,
   outline: PropTypes.bool,
   ref: PropTypes.object,
-  style: PropTypes.object,
-  type: PropTypes.string,
+  styles: PropTypes.object,
+  themePath: PropTypes.string,
 }

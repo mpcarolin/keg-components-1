@@ -1,66 +1,26 @@
 import { colors } from '../../colors'
-import { inheritFrom } from '../../../utils'
 import { get } from 'jsutils'
-import { containedStates } from './contained'
+import { contained } from './contained'
+import { buildTheme } from '../../../utils/styles'
+import defaults from '../../defaults.json'
 
-const transparent = get(colors, 'opacity._00')
-
-const textStyles = {
-  default: {
-    main: {
-      backgroundColor: transparent,
-    },
-    content: {
-      color: get(colors, 'opacity._80'),
-    }
-  },
-  disabled: {
-    main: {},
-    content: {}
-  },
-  hover: {
-    main: {
-      backgroundColor: get(colors, 'palette.white03'),
-    },
-    content: {}
-  },
-  active: {
-    main: {},
-    content: {}
-  },
-}
-
-const buildColorStyle = color => {
+const textStyle = (state, colorType) => {
+  const shade = get(defaults, `states.types.${state}.shade`)
+  const activeColor = get(colors, `surface.${colorType}.colors.${shade}`)
   return {
-    default: {
-      main: {},
-      content: {
-        color: color,
+    main: {
+      $all: {
+        backgroundColor: state === 'hover'
+          ? colors.opacity(10, activeColor)
+          : get(colors, 'palette.transparent')
       }
     },
-    hover: {
-      main: {
-        backgroundColor: colors.opacity(10, color),
-      },
-      content: {
-        color: color,
+    content: {
+      $all: {
+        color: activeColor,
       }
     }
   }
 }
 
-const text = {
-  primary: buildColorStyle(get(colors, 'surface.primary.main')),
-  secondary: buildColorStyle(get(colors, 'surface.secondary.main')),
-  warn: buildColorStyle(get(colors, 'surface.warn.main')),
-  danger: buildColorStyle(get(colors, 'surface.danger.main')),
-}
-
-text.default = inheritFrom(containedStates.default, textStyles.default)
-text.disabled = inheritFrom(text.default, containedStates.disabled, textStyles.disabled)
-text.hover = inheritFrom(text.default, containedStates.hover, textStyles.hover)
-text.active = inheritFrom(text.hover, textStyles.active)
-
-export {
-  text
-}
+export const text = buildTheme(textStyle, { inheritFrom: [ contained ] })

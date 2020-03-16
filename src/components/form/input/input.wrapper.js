@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
+import { getValueFromChildren, getReadOnly } from '../../../utils'
+import { useThemePath, useInputHandlers, usePressHandlers } from '../../../hooks'
+import { useTheme } from 're-theme'
 import PropTypes from 'prop-types'
-import { useTheme } from 'KegReTheme'
-import { getOnChangeHandler, getValueFromChildren, getInputValueKey, getReadOnly } from '../../../utils'
 
 /**
  * Gets the key value pair for the select components value
@@ -10,71 +11,54 @@ import { getOnChangeHandler, getValueFromChildren, getInputValueKey, getReadOnly
  *
  * @returns {Object} - key / value pair for the select component
  */
-const getValue = ({ children, onChange, onValueChange, readOnly, value }, isWeb) => {
+const getValue = ({ children, value }) => {
   
   const setValue = getValueFromChildren(value, children)
 
-  const valKey = getInputValueKey(isWeb, onChange, onValueChange, readOnly)
-
-  return { [valKey]: setValue }
+  return (value !== undefined)
+    ? { value: setValue }
+    : { } // return empty object, otherwise we would not be able to type into input since it would be waiting on value prop to change
 }
 
-/**
- * Builds the styles for the select component
- * @param {string} styleId - Cached id of the styles
- * @param {Object} theme - Global theme object
- * @param {string} type - Type of select theme to use
- * @param {string} elType - Platform type
- *
- * @returns {Object} - Contains all built stlyes
- */
-const buildStyles = (styleId, theme, type, elType) => {
-  styleId = styleId || `keg-${elType}-input`
-
-  const input = theme.get(
-    `${styleId}-${type || 'default'}`,
-    'form.input.default',
-    type && `form.input.${type}`
-  )
-  
-  return { input }
-}
-
-export const InputWrapper = props => {
+export const InputWrapper = forwardRef((props, ref) => {
   const theme = useTheme()
   const { 
     children,
-    editable,
-    disabled,
-    elType,
+    disabled=false,
+    editable=true,
     Element,
-    readOnly,
+    elType,
     onChange,
     onValueChange,
+    onChangeText,
+    onClick,
+    onPress,
+    readOnly=false,
+    type='default',
+    themePath=`form.input.${type}`,
     style,
-    styleId,
-    type,
     value,
     ...elProps
   } = props
   
-  const styles = buildStyles(styleId, theme, type, elType)
   const isWeb = elType === 'web'
+
+  const [ inputStyles ] = useThemePath(themePath)
   
   return (
     <Element
       elProps={ elProps }
-      style={ theme.join(styles.input, style) }
-      readOnly={  }
-      {  ...getReadOnly(isWeb, readOnly, disabled, editable) }
+      style={ theme.join(inputStyles, style) }
+      ref={ref}
+      { ...getReadOnly(isWeb, readOnly, disabled, editable) }
       { ...getValue(props, isWeb) }
-      { ...getOnChangeHandler(isWeb, onChange, onValueChange) }
+      { ...useInputHandlers({ onChange, onValueChange, onChangeText }) }
+      { ...usePressHandlers(isWeb, { onClick, onPress }) }
     >
       { children }
     </Element>
   )
-
-}
+})
 
 InputWrapper.propTypes = {
   children: PropTypes.oneOfType([
@@ -85,9 +69,8 @@ InputWrapper.propTypes = {
   elType: PropTypes.string,
   onChange: PropTypes.func,
   onValueChange: PropTypes.func,
-  ref: PropTypes.object,
+  onChangeText: PropTypes.func,
   style: PropTypes.object,
-  styleId: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.number,

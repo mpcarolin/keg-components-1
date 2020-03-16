@@ -1,27 +1,43 @@
 {
   "name": "keg-components",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "private": true,
-  "main": "build/index.web.js",
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.js",
   "scripts": {
-    "clean": "rimraf yarn.lock; rimraf ./package.lock; rimraf ./node_modules; yarn cache clean; yarn install",
-    "start": "yarn dev",
+    "build": "yarn clean:build; NODE_ENV=production rollup -c ./configs/rollup.config.js",
+    "clean": "yarn clean:nm",
+    "clean:nm": "rimraf ./node_modules; yarn cache clean; yarn install",
+    "clean:full": "rimraf yarn.lock; rimraf ./package.lock; yarn clean:nm; yarn cache clean; yarn install",
+    "clean:build": "rimraf build; mkdir build; mkdir build/cjs; mkdir build/esm; yarn copy:indexes",
+    "clean:docs": "rimraf docs",
+    "copy:indexes": "cp ./index.cjs.js build/cjs/index.js; cp ./index.esm.js build/esm/index.js",
     "dev": "rollup -c ./configs/rollup.config.js -w",
-    "build": "rollup -c ./configs/rollup.config.js",
+    "dev:keg": "DEV_MODE=keg rollup -c ./configs/rollup.config.js -w",
+    "start": "yarn dev",
     "test": "yarn test:web",
-    "test:native": "RE_PLATFORM=native NODE_ENV=test jest --no-cache --config=./configs/jest.config.js",
-    "test:web": "RE_PLATFORM=web NODE_ENV=test jest --no-cache --config=./configs/jest.config.js",
+    "test:native": "PLATFORM=native RE_PLATFORM=native NODE_ENV=test jest --no-cache --config=./configs/jest.config.js",
+    "test:web": "PLATFORM=web RE_PLATFORM=web NODE_ENV=test jest --no-cache --config=./configs/jest.config.js",
     "storybook": "RE_PLATFORM=web start-storybook",
     "sb": "RE_PLATFORM=web start-storybook",
+    "sb:build": "yarn clean:docs; RE_PLATFORM=web build-storybook -c .storybook -o docs",
+    "sb:deploy": "storybook-to-ghpages -e docs --dry-run",
     "sb:web": "RE_PLATFORM=web start-storybook",
-    "sb:native": "RE_PLATFORM=native start-storybook"
+    "sb:native": "RE_PLATFORM=native start-storybook",
+    "sb:server": "npx http-server docs"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^10.0.6",
+    "expo-font": "^8.0.0",
+    "expo": "~36.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",
-    "@babel/plugin-proposal-class-properties": "7.5.5",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-transform-object-assign": "7.7.4",
     "@babel/preset-env": "7.5.5",
     "@babel/preset-react": "7.6.3",
+    "@expo/vector-icons": "10.0.6",
     "@rollup/plugin-alias": "2.2.0",
     "@rollup/plugin-json": "4.0.1",
     "@rollup/plugin-replace": "2.3.0",
@@ -32,6 +48,7 @@
     "@storybook/addons": "5.3.6",
     "@storybook/preset-create-react-app": "1.5.2",
     "@storybook/react": "5.3.6",
+    "@storybook/storybook-deployer": "2.8.1",
     "app-root-path": "3.0.0",
     "babel-jest": "24.9.0",
     "babel-loader": "8.0.6",
@@ -39,8 +56,8 @@
     "babel-plugin-react-native-web": "0.11.5",
     "babel-preset-react-native": "4.0.1",
     "jest": "24.7.1",
-    "jsutils": "git+https://github.com/lancetipton/jsutils.git",
-    "re-theme": "git+https://github.com/simpleviewinc/sv-re-theme.git#useTheme-hook-and-examples",
+    "jsutils": "git+https://github.com/lancetipton/jsutils.git#3.2.1",
+    "re-theme": "git+https://github.com/simpleviewinc/re-theme.git#master",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "react-is": "16.12.0",
@@ -60,14 +77,9 @@
     "rollup-plugin-terser": "5.1.2"
   },
   "peerDependencies": {
-    "jsutils": "git+https://github.com/lancetipton/jsutils.git",
-    "re-theme": "git+https://github.com/simpleviewinc/sv-re-theme.git",
-    "react": "16.12.0"
-  },
-  "optionalDependencies": {
-    "react-dom": "16.12.0",
-    "react-native": "0.61.5",
-    "react-native-web": "0.12.0-rc.1"
+    "jsutils": "^git+https://github.com/lancetipton/jsutils.git",
+    "re-theme": "^git+https://github.com/simpleviewinc/re-theme.git",
+    "react": "^16.9.0"
   },
   "eslintConfig": {
     "extends": "react-app"

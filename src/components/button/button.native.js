@@ -18,15 +18,10 @@ const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : Touchabl
  * @property {Object} props.ref - reference to native element
  *
  */
-const Element = React.forwardRef(({ elProps, children, ...props}, ref) => (
-  <Touchable
-    { ...elProps }
-    { ...props }
-    ref={ ref }
-  >
-    { children }
-  </Touchable>
-))
+const Element = React.forwardRef((props, ref) => {
+  return (<Touchable { ...props } ref={ ref } />)
+})
+
 
 export const Button = props => (
   <ButtonWrapper
@@ -35,20 +30,4 @@ export const Button = props => (
   />
 )
 
-Button.propTypes = {
-  ...TouchableOpacity.propTypes,
-  children: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-    PropTypes.array,
-    PropTypes.func,
-  ]),
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
-  onPress: PropTypes.func,
-  outline: PropTypes.bool,
-  ref: PropTypes.object,
-  style: PropTypes.object,
-  text: PropTypes.bool,
-  type: PropTypes.string,
-}
+Button.propTypes = { ...Touchable.propTypes, ...ButtonWrapper.propTypes }

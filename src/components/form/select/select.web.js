@@ -16,7 +16,7 @@ import { SelectWrapper } from './select.wrapper'
  * @property {Object} props.ref - reference to native element
  *
  */
-const Slt = React.forwardRef(({ elProps, children, ...props }, ref) => (
+const Slt = React.forwardRef(({ elProps, children, readOnly, ...props }, ref) => (
   <select
     { ...elProps }
     { ...props }
@@ -28,7 +28,6 @@ const Slt = React.forwardRef(({ elProps, children, ...props }, ref) => (
 
 export const Select = props => (
   <SelectWrapper
-    styleId={ `keg-native-select` }
     { ...props }
     Element={ Slt }
     isWeb={ true }

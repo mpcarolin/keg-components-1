@@ -27,7 +27,9 @@ const addRules = [
   },
   {
     test: /\.(js|jsx)$/,
-    exclude: /node_modules/,
+    include: [
+      path.resolve(__dirname, "../node_modules/@expo/vector-icons"),
+    ],
     use: {
       loader: "babel-loader",
       options: { ...babelConfig }
@@ -39,7 +41,9 @@ const addRules = [
 // This will ensure the platform file is loaded over the default
 const customExtensions = extensions => {
   return [
-    platform === 'native' && ".native.js" || ".web.js",
+    `${platform}.cjs`,
+    `${platform}.mjs`,
+    `${platform}.js`,
     ...extensions,
   ]
 }

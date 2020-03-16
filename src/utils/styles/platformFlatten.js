@@ -1,5 +1,5 @@
 import { getPlatform } from 'KegGetPlatform'
-import { get, deepMerge, deepClone, reduceObj, isObj } from 'jsutils'
+import { get, deepMerge, reduceObj, isObj } from 'jsutils'
 
 const allPlatforms = `$all`
 const platform = `$` + getPlatform()

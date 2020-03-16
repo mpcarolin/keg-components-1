@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { useTheme } from 'KegReTheme'
+import { useTheme } from 're-theme'
 import { reduceObj } from 'jsutils'
 import domMap from './domMap'
 
@@ -19,15 +19,22 @@ const getNode = element => {
   return domMap.elMap.web[node] || element || 'span'
 }
 
+const ellipsisStyle = {
+  textOverflow: 'ellipsis', 
+  overflow: 'hidden', 
+  whiteSpace: 'nowrap',
+  display: 'block'
+}
+
 const Text = forwardRef((props, ref) => {
   const theme = useTheme()
-  const { children, element, style, styleId, onPress, onClick, ...attrs } = props
+  const { children, element, style, onPress, onClick, ellipsis, ...attrs } = props
 
   // Get the styles for the text element
   const textStyles = theme.get(
-    styleId || `keg-typography-${element}`,
     'typography.font.family',
     'typography.default',
+    ellipsis && ellipsisStyle,
     element && `typography.${element}`,
   )
 

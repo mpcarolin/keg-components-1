@@ -1,5 +1,5 @@
 import React from 'react'
-import { withTheme } from 'KegReTheme'
+import { withTheme } from 're-theme'
 import PropTypes from 'prop-types'
 import { View } from 'KegView'
 
@@ -11,8 +11,8 @@ export const Section = withTheme(props => {
       { ...args }
       style={theme.get(
         `keg-section-${ type || 'default' }`,
-        `components.section.default`,
-        type && `components.section.${ type }`,
+        `section.default`,
+        type && `section.${ type }`,
         style
       )}
     >

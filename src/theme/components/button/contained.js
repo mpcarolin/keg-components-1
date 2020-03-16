@@ -1,84 +1,48 @@
 import { colors } from '../../colors'
-import { inheritFrom } from '../../../utils'
 import { transition } from '../../transition'
 import { get } from 'jsutils'
+import { buildTheme} from '../../../utils/styles'
+import defaults from '../../defaults.json'
 
-const containedStates = {
-  default: {
+const containedStyles = (state, colorType) => {
+  const opacity = get(defaults, `states.types.${state}.opacity`)
+  const shade = get(defaults, `states.types.${state}.shade`)
+  const activeColor = get(colors, `surface.${colorType}.colors.${shade}`)
+  return {
     main: {
       $all: {
         borderWidth: 0,
         borderRadius: 4,
-        backgroundColor: get(colors, 'surface.default.main'),
+        backgroundColor: activeColor,
         padding: 9,
         minHeight: 35,
         outline: 'none',
         textAlign: 'center',
-        margin: 'auto',
-        ...transition([ 'backgroundColor', 'borderColor' ], 0.3),
+        opacity, 
       },
       $web: {
-        cursor: 'pointer',
+        cursor: (state === 'disabled') 
+          ? 'not-allowed' 
+          : 'pointer',
+        pointerEvents: (state === 'disabled') && 'not-allowed' ,
         boxShadow: 'none',
+        ...transition([ 'backgroundColor', 'borderColor' ], 0.3),
       },
       $native: {}
     },
     content: {
-      color: get(colors, 'palette.white01'),
+      color: (state === 'disabled') 
+        ? get(colors, 'opacity._50')
+        : get(colors, 'palette.white01'),
       fontSize: 14,
       fontWeight: '500',
       letterSpacing: 0.5,
       textAlign: 'center',
-      ...transition([ 'color' ], 0.15),
-    }
-  },
-  disabled: {
-    main: {
-      $all: {
-        opacity: 0.4,
-      },
       $web: {
-        cursor: 'not-allowed',
-        pointerEvents: 'none',
-      },
-      $native: {}
-    },
-    content: {
-      color: get(colors, 'opacity._50'),
+        ...transition([ 'color' ], 0.15),
+      }
     }
-  },
-  hover: {
-    main: {
-      backgroundColor: get(colors, 'surface.default.dark'),
-    },
-    content: {}
-  },
-  active: {
-    main: {},
-    content: {}
-  },
-}
-
-const buildColorStyle = colorStyle => {
-  return {
-    default: { main: { backgroundColor: colorStyle.main } },
-    hover: { main: { backgroundColor: colorStyle.dark } }
   }
 }
 
-const contained = {
-  primary: buildColorStyle(get(colors, 'surface.primary')),
-  secondary: buildColorStyle(get(colors, 'surface.secondary')),
-  warn: buildColorStyle(get(colors, 'surface.warn')),
-  danger: buildColorStyle(get(colors, 'surface.danger')),
-}
-
-contained.default = inheritFrom(containedStates.default, {})
-contained.disabled = inheritFrom(contained.default, containedStates.disabled, {})
-contained.hover = inheritFrom(contained.default, containedStates.hover, {})
-contained.active = inheritFrom(contained.default, containedStates.hover, containedStates.active, {})
-
-export {
-  contained,
-  containedStates,
-}
+export const contained = buildTheme(containedStyles)

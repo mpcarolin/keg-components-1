@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useTheme } from 'KegReTheme'
-import { getOnChangeHandler, getValueFromChildren, getInputValueKey, getReadOnly } from '../../../utils'
+import { useTheme } from 're-theme'
+import { useThemePath } from '../../../hooks'
+import { getValueFromChildren, getInputValueKey, getReadOnly } from '../../../utils'
+import { useSelectHandlers } from '../../../hooks/useSelectHandlers'
 
 /**
  * Gets the key value pair for the select components value
@@ -19,26 +21,6 @@ const getValue = ({ children, onChange, onValueChange, readOnly, value }, isWeb)
   return { [valKey]: setValue }
 }
 
-/**
- * Builds the styles for the select component
- * @param {string} styleId - Cached id of the styles
- * @param {Object} theme - Global theme object
- * @param {string} type - Type of select theme to use
- *
- * @returns {Object} - Contains all built stlyes
- */
-const buildStyles = (styleId, theme, type) => {
-  styleId = styleId || `keg-select`
-
-  const select = theme.get(
-    `${styleId}-${type || 'default'}`,
-    'form.select.default',
-    type && `form.select.${type}`
-  )
-  
-  return { select }
-}
-
 export const SelectWrapper = props => {
   const theme = useTheme()
   const { 
@@ -50,22 +32,22 @@ export const SelectWrapper = props => {
     readOnly,
     onChange,
     onValueChange,
+    type='default',
+    themePath=`form.select.${type}`,
     style,
-    styleId,
-    type,
     value,
     ...elProps
   } = props
   
-  const styles = buildStyles(styleId, theme, type)
+  const [ selectStyles ] = useThemePath(themePath)
 
   return (
     <Element
       elProps={ elProps }
-      style={ theme.join(styles.select, style) }
-      {  ...getReadOnly(isWeb, readOnly, disabled, editable) }
+      style={ theme.join(selectStyles, style) }
+      { ...getReadOnly(isWeb, readOnly, disabled, editable) }
       { ...getValue(props, isWeb) }
-      { ...getOnChangeHandler(isWeb, onChange, onValueChange) }
+      { ...useSelectHandlers({ onChange, onValueChange }) }
     >
       { children }
     </Element>
@@ -83,7 +65,6 @@ SelectWrapper.propTypes = {
   onValueChange: PropTypes.func,
   ref: PropTypes.object,
   style: PropTypes.object,
-  styleId: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.number,

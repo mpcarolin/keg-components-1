@@ -7,7 +7,9 @@ import cleanup from 'rollup-plugin-cleanup'
 import sourcemaps from 'rollup-plugin-sourcemaps'
 import alias from '@rollup/plugin-alias'
 import pathAlias from './aliases.json'
+import buildHook from './buildHook'
 
+const { DEV_MODE } = process.env
 const babelConfig = require('./babel.config.js')
 
 const getAliases = platform => Object
@@ -20,23 +22,37 @@ const getAliases = platform => Object
 
 
 const shared = {
-  external: ['react', 'react-dom', 'react-native', 'jsutils', 're-theme' ],
+  external: [
+    'react',
+    'react-dom',
+    'react-native',
+    'jsutils',
+    're-theme',
+    'prop-types',
+    '@expo/vector-icons',
+    'expo-fonts'
+  ],
   watch: {
     clearScreen: false
   },
   plugins: platform => ([
+   DEV_MODE && buildHook(DEV_MODE),
     replace({
-      "process.env.NODE_ENV": JSON.stringify('production'),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.RE_PLATFORM": JSON.stringify(platform),
+      "process.env.PLATFORM": JSON.stringify(platform),
     }),
     resolve(),
     json(),
+    commonjs({
+      include: 'node_modules/**',
+    }),
     babel({
       exclude: 'node_modules/**',
+      runtimeHelpers: true,
       ...babelConfig
     }),
     sourcemaps(),
-    commonjs(),
     cleanup(),
   ])
 }
@@ -46,10 +62,18 @@ export default Array
   .map((platform => ({
     ...shared,
     input: `./src/index.js`,
-    output: {
-      file: `./build/index.${platform}.js`,
-      format: "cjs"
-    },
+    output: [
+      {
+        file: `./build/cjs/kegComponents.${platform}.js`,
+        format: 'cjs',
+        sourcemaps: true
+      },
+      {
+        file: `./build/esm/kegComponents.${platform}.js`,
+        format: 'esm',
+        sourcemaps: true
+      },
+    ],
     plugins: [
       ...shared.plugins(platform),
       alias({
