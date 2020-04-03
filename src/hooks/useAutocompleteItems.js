@@ -22,4 +22,9 @@ export const useAutocompleteItems = ( text, menuItems ) => {
   return [ autocompleteItems, setSelectedItem, selectedItem ]
 }
 
+/**
+ * 
+ * @param {*} text 
+ * @param {*} menuItems 
+ */
 const getAutocompleteItems = (text, menuItems) => getFilteredStrings(text, menuItems).map(text => ({ text }))

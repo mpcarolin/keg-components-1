@@ -1,6 +1,7 @@
-import { stringIncludes, ignoreCase, ignoreAccents } from './stringIncludes'
+import { stringIncludes, toLowerCase, ignoreAccents } from './stringIncludes'
+
 /**
- * Returns a new array containing a subset of possibleValues, each of which is:
+ * Returns a new array containing a subset of possibleValues, with each resulting item being:
  *  - unique; and
  *  - either a substring of `text` or the same string.
  * 
@@ -10,7 +11,7 @@ import { stringIncludes, ignoreCase, ignoreAccents } from './stringIncludes'
  * @returns - the new array of strings
  */
 export const getFilteredStrings = (text, possibleValues) => {
-  const isMatch = item => item && stringIncludes(item, text, [ ignoreCase, ignoreAccents ])
+  const isMatch = item => item && stringIncludes(item, text, [ toLowerCase, ignoreAccents ])
 
   const items = possibleValues.filter(isMatch)
 

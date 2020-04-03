@@ -676,6 +676,7 @@ ButtonWrapper.propTypes = {
   isWeb: PropTypes.bool,
   onClick: PropTypes.func,
   onPress: PropTypes.func,
+  outline: PropTypes.bool,
   ref: PropTypes.object,
   styles: PropTypes.object,
   themePath: PropTypes.string
@@ -2905,6 +2906,56 @@ var switchStyles = _objectSpread2({
   }
 }, sharedToggle);
 
+var autocomplete = {
+  $all: {
+    input: {
+      backgroundColor: colors$1.palette.white01,
+      minWidth: 100
+    },
+    highlighted: {
+      backgroundColor: '#e0e0e0'
+    },
+    menu: {
+      backgroundColor: 'white',
+      position: 'absolute'
+    },
+    item: {
+      height: 10,
+      margin: 0,
+      marginTop: 8,
+      marginBottom: 8,
+      fontSize: 12
+    }
+  },
+  $web: {
+    input: {
+      fontFamily: 'inherit',
+      height: jsutils.get(defaults, 'form.input.height', 35),
+      fontSize: 16,
+      padding: padding.size,
+      width: '100%'
+    },
+    menu: {
+      width: '100%',
+      overflowY: 'auto',
+      overflowX: 'hidden'
+    },
+    highlighted: {
+      cursor: 'pointer'
+    },
+    item: {
+      padding: 10
+    }
+  },
+  $native: {
+    input: {},
+    menu: {
+      left: 0,
+      top: 0
+    }
+  }
+};
+
 var form$2 = {
   checkbox: checkbox,
   form: form$1,
@@ -2912,7 +2963,8 @@ var form$2 = {
   option: option,
   radio: radio,
   select: select,
-  switch: switchStyles
+  switch: switchStyles,
+  autocomplete: autocomplete
 };
 
 var layout$1 = {

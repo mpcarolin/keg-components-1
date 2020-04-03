@@ -1,25 +1,32 @@
-import { pipeline, isStr } from 'jsutils'
+import { pipeline, isStr, validate } from 'jsutils'
 
 /**
- * Returns true if aString includes bString as a substring after applying the functions identified by transformFuncs 
- * TODO: Remove this if these functions are approved/merged into jsutils
+ * Returns true if aString includes bString as a substring after applying the functions in transformFuncs 
  * @param {String} aString
  * @param {String} bString 
  * @param {Array} transformFuncs functions which transform aString and bString before the substring check
  * @example stringIncludes("I can say my abcs all day", "ÁBC", [ignoreCase, ignoreAccents]) // returns true
  */
 export const stringIncludes = (aString, bString, transformFuncs=[]) => {
-  if (!isStr(aString) || !isStr(bString)) {
-    console.error(`args in stringIncludes must be a string. Found: `, {aString, bString})
-    return false
-  }
+  const [ valid ] = validate({ aString, bString }, { $default: isStr })
+  if (!valid) return
+
   const a = pipeline(aString, ...transformFuncs)
   const b = pipeline(bString, ...transformFuncs)
   return a.includes(b)
 }
 
-/** Returns String s in lower case */
-export const ignoreCase = (s) => s.toLowerCase()
+/**
+ * @param {String} s - string
+ * @returns {String} s in lower case
+ */
+export const toLowerCase = (s) => s.toLowerCase()
 
-/** Returns String s normalized without accents, so Á is converted to A*/
-export const ignoreAccents = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+/** Returns 
+/**
+ * @param {*} s 
+ * @returns {String} s without accents
+ */
+export const ignoreAccents = (s) => s
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')

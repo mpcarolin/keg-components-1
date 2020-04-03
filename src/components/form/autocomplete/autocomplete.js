@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useTheme } from 're-theme'
-import { useAutocompleteItems } from 'KegHooks/autocomplete'
+import { useAutocompleteItems } from 'KegHooks'
 import { ScrollableSelect } from 'KegScrollableSelect'
 import { Input } from 'KegInput'
 import { View } from 'KegView'
@@ -44,7 +44,20 @@ export const Autocomplete = (props) => {
   const [ inputText, updateText ] = useState(text || '')
   const [ autocompleteItems, setSelectedItem ] = useAutocompleteItems(inputText, values)
 
-  const onSelectItem = ({ text='' }) => [ updateText, setSelectedItem, onSelect ].map(fn => fn && fn(text))
+  const onSelectItem = useCallback(
+    ({ text='' }) => [ updateText, setSelectedItem, onSelect ].map(fn => fn && fn(text)),
+    [ updateText, setSelectedItem, onSelect ]
+  )
+
+  const updateOnChange = useCallback(
+    event => {
+      const text = getTextFromChangeEvent(event)
+      updateText(text)
+      checkCall(onChange, text)
+    },
+    [ updateText, onChange ]
+  )
+
   const showMenu = (autocompleteItems.length > 0)
 
   return (
@@ -53,11 +66,7 @@ export const Autocomplete = (props) => {
         type={'text'}
         style={ theme.join(theme.form.autocomplete.input, theme.typography.font, inputStyle) }
         placeholder={placeholder}
-        onChange={event => {
-          const text = getTextFromChangeEvent(event)
-          updateText(text)
-          checkCall(onChange, text)
-        }}
+        onChange={updateOnChange}
         value={inputText}
         ref={inputRef}
       />
