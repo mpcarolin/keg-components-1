@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.js": "/main.648ecc923079381bc521.bundle.js",
+    "main.js.map": "/main.648ecc923079381bc521.bundle.js.map",
+    "runtime~main.js": "/runtime~main.648ecc923079381bc521.bundle.js",
+    "runtime~main.js.map": "/runtime~main.648ecc923079381bc521.bundle.js.map",
+    "vendors~main.js": "/vendors~main.648ecc923079381bc521.bundle.js",
+    "vendors~main.js.map": "/vendors~main.648ecc923079381bc521.bundle.js.map",
+    "iframe.html": "/iframe.html",
+    "precache-manifest.481d52e358e3daffa06ff69c307664fc.js": "/precache-manifest.481d52e358e3daffa06ff69c307664fc.js",
+    "service-worker.js": "/service-worker.js",
+    "static/media/AntDesign.ttf": "/static/media/AntDesign.3a2ba315.ttf",
+    "static/media/Entypo.ttf": "/static/media/Entypo.744ce600.ttf",
+    "static/media/EvilIcons.ttf": "/static/media/EvilIcons.140c53a7.ttf",
+    "static/media/Feather.ttf": "/static/media/Feather.6beba7e6.ttf",
+    "static/media/FontAwesome.ttf": "/static/media/FontAwesome.b06871f2.ttf",
+    "static/media/FontAwesome5_Brands.ttf": "/static/media/FontAwesome5_Brands.c6aef942.ttf",
+    "static/media/FontAwesome5_Regular.ttf": "/static/media/FontAwesome5_Regular.2e562d4e.ttf",
+    "static/media/FontAwesome5_Solid.ttf": "/static/media/FontAwesome5_Solid.872545dd.ttf",
+    "static/media/Foundation.ttf": "/static/media/Foundation.e20945d7.ttf",
+    "static/media/Ionicons.ttf": "/static/media/Ionicons.b2e0fc82.ttf",
+    "static/media/MaterialCommunityIcons.ttf": "/static/media/MaterialCommunityIcons.5a293a27.ttf",
+    "static/media/MaterialIcons.ttf": "/static/media/MaterialIcons.a37b0c01.ttf",
+    "static/media/Octicons.ttf": "/static/media/Octicons.8e7f807e.ttf",
+    "static/media/SimpleLineIcons.ttf": "/static/media/SimpleLineIcons.d2285965.ttf",
+    "static/media/Zocial.ttf": "/static/media/Zocial.5cdf883b.ttf",
+    "vendors~main.648ecc923079381bc521.bundle.js.LICENSE.txt": "/vendors~main.648ecc923079381bc521.bundle.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "runtime~main.648ecc923079381bc521.bundle.js",
+    "vendors~main.648ecc923079381bc521.bundle.js",
+    "main.648ecc923079381bc521.bundle.js"
+  ]
+}
