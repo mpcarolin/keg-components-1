@@ -9,39 +9,48 @@ const containedStyles = (state, colorType) => {
   const shade = get(defaults, `states.types.${state}.shade`)
   const activeColor = get(colors, `surface.${colorType}.colors.${shade}`)
   return {
-    main: {
-      $all: {
-        borderWidth: 0,
-        borderRadius: 4,
-        backgroundColor: activeColor,
-        padding: 9,
-        minHeight: 35,
+    xsmall: {
+      content: {
+        color:
+          state === 'disabled'
+            ? get(colors, 'opacity._50')
+            : get(colors, 'palette.white01'),
+        fontSize: 14,
+        fontWeight: '500',
+        letterSpacing: 0.5,
         textAlign: 'center',
-        opacity,
+        $web: {
+          ...transition(['color'], 0.15),
+        },
       },
-      $web: {
-        cursor: state === 'disabled' ? 'not-allowed' : 'pointer',
-        pointerEvents: state === 'disabled' && 'not-allowed',
-        outline: 'none',
-        boxShadow: 'none',
-        ...transition([ 'backgroundColor', 'borderColor' ], 0.3),
+      main: {
+        $all: {
+          borderWidth: 0,
+          borderRadius: 4,
+          backgroundColor: activeColor,
+          padding: 9,
+          minHeight: 35,
+          textAlign: 'center',
+          opacity,
+        },
+        $web: {
+          cursor: state === 'disabled' ? 'not-allowed' : 'pointer',
+          pointerEvents: state === 'disabled' && 'not-allowed',
+          outline: 'none',
+          boxShadow: 'none',
+          ...transition([ 'backgroundColor', 'borderColor' ], 0.3),
+        },
+        $native: {},
       },
-      $native: {},
     },
-    content: {
-      color:
-        state === 'disabled'
-          ? get(colors, 'opacity._50')
-          : get(colors, 'palette.white01'),
-      fontSize: 14,
-      fontWeight: '500',
-      letterSpacing: 0.5,
-      textAlign: 'center',
-      $web: {
-        ...transition(['color'], 0.15),
+    medium: {
+      main: {
+        backgroundColor: 'orange',
       },
     },
   }
 }
 
 export const contained = buildTheme(containedStyles)
+
+console.log({ contained })

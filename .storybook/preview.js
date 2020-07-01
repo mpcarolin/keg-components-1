@@ -19,7 +19,6 @@ console.warn = function override(...args) {
     orgWarn.apply(console, [ ...args ])
 }
 
-
 addDecorator(storyFn =>
   <ReThemeProvider theme={ theme } >
     <View style={{ maxWidth: '80vw', margin: 'auto', marginTop: 30 }}>

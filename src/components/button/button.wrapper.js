@@ -62,6 +62,8 @@ export const ButtonWrapper = props => {
     { ref: hoverRef, noMerge: true }
   )
 
+  console.log({ themeStyles })
+
   return (
     <Element
       {...elProps}
