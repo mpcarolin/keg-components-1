@@ -13,10 +13,9 @@ const checkboxDefault = {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-    },
-    $web: {
       display: 'flex',
     },
+    $web: {},
   },
   wrapper: {
     $web: {

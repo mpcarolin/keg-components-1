@@ -39,23 +39,16 @@ const defaultSideSectionStyle = {
 export const appHeader = {
   default: {
     container: {
-      $native: {
+      shadow: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
+      },
+      $all: {
         ...flex.justify.center,
         ...flex.align.left,
         flex: 0,
-        shadow: {
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.5,
-          shadowRadius: 1,
-        },
-      },
-      $web: {
-        shadow: {
-          boxShadow: '0px 4px 7px 0px #9E9E9E',
-        },
-      },
-      $all: {
         backgroundColor: get(colors, 'surface.primary.colors.dark'),
         height: 70,
         width: '100%',
