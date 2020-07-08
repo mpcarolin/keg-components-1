@@ -36,15 +36,16 @@ const defaultSideSectionStyle = {
     },
   },
 }
+
 export const appHeader = {
   default: {
+    shadow: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.5,
+      shadowRadius: 1,
+    },
     container: {
-      shadow: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.5,
-        shadowRadius: 1,
-      },
       $all: {
         ...flex.justify.center,
         ...flex.align.left,

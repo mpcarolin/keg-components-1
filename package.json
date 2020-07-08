@@ -34,7 +34,7 @@
     "test:web": "PLATFORM=web RE_PLATFORM=web NODE_ENV=test jest --no-cache --config=./configs/jest.config.js",
     "view:reports": "open reports/coverage/lcov-report/index.html",
     "storybook": "nodemon --watch ./configs --exec 'RE_PLATFORM=web start-storybook -p 60710'",
-    "sb": "nodemon --watch ./configs --exec 'RE_PLATFORM=web start-storybook -p 60710'",
+    "sb": "nodemon --watch ./configs --exec 'RE_PLATFORM=native start-storybook -p 60710'",
     "sb:build": "yarn clean:docs; RE_PLATFORM=web build-storybook -c .storybook -o docs",
     "sb:deploy": "storybook-to-ghpages -e docs --dry-run",
     "sb:web": "RE_PLATFORM=web start-storybook -p 60710",
