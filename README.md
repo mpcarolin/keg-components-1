@@ -23,6 +23,7 @@ Keg Components leverages [re-theme](https://github.com/simpleviewinc/re-theme) f
   import { useThemePath } from '../../hooks'
 
   const FooBar = (props) => {
+    // theme from `src/theme/components/fooBar.js`
     const fooBarTheme = useThemePath('fooBar')
     return (
       <View style={fooBarTheme.main}>
@@ -36,8 +37,8 @@ Keg Components leverages [re-theme](https://github.com/simpleviewinc/re-theme) f
 
 Every component implemented in keg-components that has a theme should define `main` and `content` styles:
 ```javascript
-/* src/theme/components/button.js */
-export const button = {
+/* src/theme/components/sampleButton.js */
+export const sampleButton = {
   main: { ... },
   content: { ... }
 }
@@ -83,12 +84,12 @@ export const button = {
     main: {
       backgroundColor: 'coral'
     },
-	},
-	$native: {
-  	main: { 
+  },
+  $native: {
+    main: { 
       backgroundColor: 'green' 
     },
-  	content: { 
+    content: { 
       margin: 15 
     }
   }
@@ -97,8 +98,8 @@ export const button = {
 * **DO** this:
 ```javascript
 export const button = {
-	main: {
-  	$native: { 
+  main: {
+    $native: { 
       backgroundColor: 'green'
     },
     $web: { 
