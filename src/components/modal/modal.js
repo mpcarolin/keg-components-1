@@ -30,21 +30,18 @@ const DefaultAnimationView = ({
   const animationOffset = windowHeight / 2
   const bottomOfScreen = windowHeight + animationOffset
   const origin = 0
-  // const current = visible ? 0 : bottomOfScreen
-  // todo: redo with raw animation
-  const [slideUp] = useFromToAnimation({
-    forward: visible,
-    from: bottomOfScreen,
-    to: origin,
-    cb: onAnimationFinish,
-    animateOnFirstRender: false,
+
+  const [slide] = useFromToAnimation({
+    from: visible ? bottomOfScreen : origin,
+    to: visible ? origin : bottomOfScreen,
+    onFinish: onAnimationFinish,
   })
 
   return (
     <Animated.View
       style={{
         ...modalStyles.content,
-        transform: [{ translateY: slideUp }],
+        transform: [{ translateY: slide }],
       }}
     >
       { children }
