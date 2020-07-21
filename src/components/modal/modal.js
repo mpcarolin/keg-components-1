@@ -31,11 +31,14 @@ const DefaultAnimationView = ({
   const bottomOfScreen = windowHeight + animationOffset
   const origin = 0
 
-  const [slide] = useFromToAnimation({
-    from: visible ? bottomOfScreen : origin,
-    to: visible ? origin : bottomOfScreen,
-    onFinish: onAnimationFinish,
-  })
+  const [slide] = useFromToAnimation(
+    {
+      from: visible ? bottomOfScreen : origin,
+      to: visible ? origin : bottomOfScreen,
+      onFinish: onAnimationFinish,
+    },
+    [visible]
+  )
 
   return (
     <Animated.View
