@@ -82,7 +82,7 @@
     "husky": "4.2.5",
     "jest": "26.1.0",
     "jest-expo": "38.0.2",
-    "jsutils": "git+https://github.com/lancetipton/jsutils.git#4.0.1",
+    "@ltipton/jsutils": "5.1.0",
     "lint-staged": "10.2.11",
     "nodemon": "^2.0.4",
     "onchange": "7.0.2",

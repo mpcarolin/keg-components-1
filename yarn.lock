@@ -2017,6 +2017,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@ltipton/jsutils@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@ltipton/jsutils/-/jsutils-5.1.0.tgz#92beba2cc880edccd502b51c543dbe62cfeda0fd"
+  integrity sha512-NuDreFeYCvpTtWDKaF6uWXke8H9Parw7CYvo3hKE5YR2DxAZqSldsfTh5+5GLSkCQnjPoIE6hrc1POW2nFF1eg==
+
 "@mdx-js/loader@^1.5.1":
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-1.6.7.tgz#3a5fa56711bcc72e228f5f0f8b0e4fea05c86cf0"
@@ -12097,10 +12102,6 @@ jstransformer@1.0.0:
   dependencies:
     is-promise "^2.0.0"
     promise "^7.0.1"
-
-"jsutils@git+https://github.com/lancetipton/jsutils.git#4.0.1":
-  version "4.0.1"
-  resolved "git+https://github.com/lancetipton/jsutils.git#39c5868cd558bbfeaea14525ab171ef815b5b01d"
 
 jsx-ast-utils@^2.2.1, jsx-ast-utils@^2.2.3, jsx-ast-utils@^2.4.1:
   version "2.4.1"
