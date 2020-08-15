@@ -115,7 +115,7 @@
     "@simpleviewinc/re-theme": "2.0.1",
     "expo": "^38.0.0",
     "expo-font": "^8.0.0",
-    "@simpleviewinc/jsutils": "5.1.0",
+    "@ltipton/jsutils": "5.1.0",
     "react": "^16.9.0"
   },
   "browserslist": {
