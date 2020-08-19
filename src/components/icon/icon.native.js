@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesome } from '@expo/vector-icons'
 import { IconWrapper } from './icon.wrapper'
 
 /**
@@ -15,12 +14,10 @@ import { IconWrapper } from './icon.wrapper'
  * @property {string} props.type - Icon type
  *
  */
-export const Icon = props => (
-  <IconWrapper
-    {...props}
-    Element={props.Element || FontAwesome}
-  />
-)
+export const Icon = props => <IconWrapper
+  {...props}
+  Element={props.Element}
+/>
 
 Icon.propTypes = {
   ...IconWrapper.propTypes,

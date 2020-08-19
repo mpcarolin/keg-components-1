@@ -1,6 +1,5 @@
 import React from 'react'
 import { IconWrapper } from './icon.wrapper'
-import { FontAwesome } from '@expo/vector-icons'
 
 /**
  * Icon
@@ -17,7 +16,7 @@ import { FontAwesome } from '@expo/vector-icons'
 export const Icon = props => (
   <IconWrapper
     {...props}
-    Element={props.Element || FontAwesome}
+    Element={props.Element}
     isWeb={true}
   />
 )

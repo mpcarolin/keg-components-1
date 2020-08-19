@@ -15,6 +15,7 @@ describe('AppHeader', () => {
       >
         <AppHeader
           shadow
+          iconComponent={() => null}
           title={'Header Title'}
           leftIcon={'beer'}
         />
