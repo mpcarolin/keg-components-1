@@ -66,7 +66,11 @@ export const IconWrapper = React.forwardRef((props, ref) => {
 })
 
 IconWrapper.propTypes = {
-  Element: PropTypes.oneOfType([ PropTypes.element, PropTypes.func ]),
+  Element: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func,
+    PropTypes.elementType,
+  ]),
   color: PropTypes.string,
   name: PropTypes.string.isRequired,
   ref: PropTypes.object,
