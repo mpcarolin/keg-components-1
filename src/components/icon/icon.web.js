@@ -11,7 +11,7 @@ import { IconWrapper } from './icon.wrapper'
  * @property {String} props.size - Size of the icon ( if undefined, ( theme || style).fontSize is used )
  * @property {Object} props.style - custom style
  * @property {string} props.type - Icon type
- *
+ * @property {String} props.Element - the icon set component to use
  */
 export const Icon = props => (
   <IconWrapper

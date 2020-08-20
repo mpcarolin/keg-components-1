@@ -27,10 +27,10 @@ export const AppHeader = props => {
     LeftComponent,
     onLeftClick,
     leftIcon,
-    leftIconComponent,
+    LeftIconComponent,
     rightIcon,
-    rightIconComponent,
-    iconComponent,
+    RightIconComponent,
+    IconComponent,
     onRightClick,
     shadow,
     ellipsis,
@@ -57,7 +57,7 @@ export const AppHeader = props => {
           <Side
             styles={headerStyles.content}
             iconName={leftIcon}
-            iconElement={leftIconComponent || iconComponent}
+            IconElement={LeftIconComponent || IconComponent}
             action={onLeftClick}
           >
             { LeftComponent }
@@ -76,7 +76,7 @@ export const AppHeader = props => {
             right
             styles={headerStyles.content}
             iconName={rightIcon}
-            iconElement={rightIconComponent || iconComponent}
+            IconElement={RightIconComponent || IconComponent}
             action={onRightClick}
           >
             { RightComponent }
@@ -150,7 +150,7 @@ const Center = props => {
  * @param {Object} props
  * @property {Object} styles
  * @property {String=} iconName - name of icon to use (FontAwesome icons). uses the Icon component
- * @property {Component} iconElement - icon component for the icon set (e.g. FontAwesome)
+ * @property {Component} IconElement - icon component for the icon set (e.g. FontAwesome)
  * @property {Function} action - function to perform on section click
  * @property {Component} children  - custom component to display on the section. overrides the other props
  * @property {Boolean} right - to decide which side theme to use
@@ -158,19 +158,19 @@ const Center = props => {
  * @returns {Component} - section component
  */
 const Side = props => {
-  const { styles, iconName, iconElement, action, children, right } = props
+  const { styles, iconName, IconElement, action, children, right } = props
 
   const position = right ? 'right' : 'left'
   // get the styles for the specified position
   const contentStyles = get(styles, [ position, 'content' ])
   const iconProps = {
     styles,
-    iconElement,
+    IconElement,
     iconName,
     position,
   }
 
-  const showIcon = iconName && iconElement
+  const showIcon = iconName && IconElement
 
   return (
     <View
@@ -203,18 +203,18 @@ const Side = props => {
  * @param {Object} props
  * @property {Object} styles - default theme style
  * @property {String} iconName - icon name
- * @property {Component} iconElement - icon component for the icon set
+ * @property {Component} IconElement - icon component for the icon set
  * @property {String} position - side position (left/right)
  *
  * @returns {Component} - Customized Icon component
  */
 const CustomIcon = props => {
-  const { styles, iconName, iconElement, position } = props
+  const { styles, iconName, IconElement, position } = props
 
   return (
     <Icon
       name={iconName}
-      Element={iconElement}
+      Element={IconElement}
       styles={get(styles, [ position, 'content', 'icon' ])}
     />
   )

@@ -100,7 +100,7 @@ storiesOf('Display | AppHeader', module)
         shadow
         title={'Custom Icons, no left action'}
         styles={headerStyles2}
-        iconComponent={FontAwesome}
+        IconComponent={FontAwesome}
         leftIcon={'android'}
         rightIcon={'search'}
         onRightClick={action('Right Section Clicked!')}
@@ -125,7 +125,7 @@ storiesOf('Display | AppHeader', module)
       <p />
       <AppHeader
         title={'Clickable left icon'}
-        iconComponent={FontAwesome}
+        IconComponent={FontAwesome}
         leftIcon={'arrow-left'}
         onLeftClick={action('Left Section Clicked!')}
       />
