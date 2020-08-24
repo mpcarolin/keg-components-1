@@ -28,9 +28,6 @@ const shared = {
     'react-native',
     '@svkeg/jsutils',
     '@svkeg/re-theme',
-    // "./node_modules/@svkeg/re-theme/build/esm/reTheme.js",
-    // "./node_modules/@svkeg/re-theme/build/esm/reTheme.native.js",
-    '/Users/michael.carolin/keg/keg-components/node_modules/@svkeg/re-theme/build/esm/reTheme.js',
     'prop-types',
     'expo-fonts'
   ],
